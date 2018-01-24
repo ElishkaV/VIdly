@@ -21,5 +21,23 @@ namespace Vidly2018.Controllers
 
             return View(customers);
         }
+
+        public ActionResult Details(int id)
+        {
+            Customer customer = GetCustomers().FirstOrDefault(c => c.Id == id);
+            if (customer == null)
+                return new HttpNotFoundResult();
+            return View(customer);
+        }
+
+        public List<Customer> GetCustomers()
+        {
+            List<Customer> list = new List<Customer>
+            {
+                new Customer { Id = 1, FirstName = "John", LastName = "Smith" },
+                new Customer { Id = 2, FirstName = "Mary", LastName = "Williams" }
+            };
+            return list;
+        }
     }
 }
