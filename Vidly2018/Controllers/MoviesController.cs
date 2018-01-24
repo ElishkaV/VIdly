@@ -22,14 +22,24 @@ namespace Vidly2018.Controllers
             return Content("id=" + id);
         }
 
-        public ActionResult Index(int? pageIndex, string sortBy)
-        {
-            if (!pageIndex.HasValue)
-                pageIndex = 1;
+        //public ActionResult Index(int? pageIndex, string sortBy)
+        //{
+        //    if (!pageIndex.HasValue)
+        //        pageIndex = 1;
 
-            if (string.IsNullOrWhiteSpace(sortBy))
-                sortBy = "Name";
-            return Content($"pageIndex = {pageIndex} & sortBy = {sortBy}");
+        //    if (string.IsNullOrWhiteSpace(sortBy))
+        //        sortBy = "Name";
+        //    return Content($"pageIndex = {pageIndex} & sortBy = {sortBy}");
+        //}
+
+        public ActionResult Index()
+        {
+            List<Movie> list = new List<Movie>
+            {
+                new Movie { Id = 1, Name = "Shreck"},
+                new Movie { Id = 2, Name = "Wall-e"}
+            };
+            return View(list);
         }
     }
 }
