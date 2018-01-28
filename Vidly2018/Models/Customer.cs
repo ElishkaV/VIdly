@@ -15,8 +15,11 @@ namespace Vidly2018.Models
 
         [Required, StringLength(255)]
         public string LastName { get; set; }
+
         public bool IsSubscribedNewsletter { get; set; }
         public MembershipType MembershipType { get; set; }
         public byte MembershipTypeId { get; set; }
+
+        public DateTime? Birthdate { get; set; }
     }
 }
