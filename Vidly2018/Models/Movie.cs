@@ -13,13 +13,13 @@ namespace Vidly2018.Models
         [Required]
         public string Name { get; set; }
 
-        [Required]
+        [Required, Display(Name = "Release Date")]
         public DateTime ReleaseDate { get; set; }
 
         [Required]
         public DateTime DateAdded { get; set; }
 
-        [Required]
+        [Required, Display(Name = "Number in Stock")]
         public int NumbersInStock { get; set; }
 
         [Required]

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Vidly2018.Models;
 using System.Data.Entity;
+using Vidly2018.ViewModels;
 
 namespace Vidly2018.Controllers
 {
@@ -60,6 +61,18 @@ namespace Vidly2018.Controllers
         {
             var movie = _context.Movies.Include(m => m.Genre).Where(m => m.Id == id).FirstOrDefault();
             return View(movie);
+        }
+
+        public ActionResult New()
+        {
+            var membershipTypes = _context.MembershipTypes.ToList();
+
+            var newMovieViewModel = new NewMovieViewModel
+            {
+                MembershipTypes = membershipTypes
+            };
+
+            return View(newMovieViewModel);
         }
     }
 }
