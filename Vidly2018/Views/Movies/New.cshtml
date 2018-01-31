@@ -10,19 +10,23 @@
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Movie.Name)
-        @Html.TextBoxFor(m => m.Movie.Name)
+        @Html.TextBoxFor(m => m.Movie.Name, new { @class = "form-control"})
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Movie.ReleaseDate)
-        @Html.TextBoxFor(m => m.Movie.ReleaseDate)
+        @Html.TextBoxFor(m => m.Movie.ReleaseDate, new { @class = "form-control" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Movie.GenreId)
-        @Html.ListBoxFor(m => m.Movie.GenreId, )
+        @Html.DropDownListFor(m => m.MembershipTypes, new SelectList( Model.MembershipTypes, "Id", "MembershipName"), "", new { @class = "form-control" })
     </div>
 
+    <div class="form-group">
+        @Html.LabelFor(m => m.Movie.NumbersInStock)
+        @Html.TextBoxFor(m => m.Movie.NumbersInStock, new { @class = "form-control" })
+    </div>
 
 }
 
