@@ -65,14 +65,20 @@ namespace Vidly2018.Controllers
 
         public ActionResult New()
         {
-            var membershipTypes = _context.MembershipTypes.ToList();
+            var genres = _context.Genres.ToList();
 
-            var newMovieViewModel = new NewMovieViewModel
+            var newMovieViewModel = new MovieFormViewModel
             {
-                MembershipTypes = membershipTypes
+                Genres = genres
             };
 
             return View(newMovieViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Save(Movie movie)
+        {
+            return View();
         }
     }
 }

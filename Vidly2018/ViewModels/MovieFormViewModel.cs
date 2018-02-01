@@ -6,10 +6,12 @@ using Vidly2018.Models;
 
 namespace Vidly2018.ViewModels
 {
-    public class NewMovieViewModel
+    public class MovieFormViewModel
     {
         public Movie Movie { get; set; }
 
-        public IEnumerable<MembershipType> MembershipTypes { get; set; }
+        public IEnumerable<Genre> Genres { get; set; }
+
+        public string Title { get { if (Movie.Id == 0) return "New Movie"; return "Edit Movie"; } }
     }
 }
