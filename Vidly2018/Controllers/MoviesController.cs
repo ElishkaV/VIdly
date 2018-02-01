@@ -104,7 +104,7 @@ namespace Vidly2018.Controllers
                 movieInDb.NumbersInStock = movie.NumbersInStock;
                 
             }
-
+             
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Movies");
