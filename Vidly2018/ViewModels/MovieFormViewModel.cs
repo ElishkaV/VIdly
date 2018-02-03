@@ -12,6 +12,6 @@ namespace Vidly2018.ViewModels
 
         public IEnumerable<Genre> Genres { get; set; }
 
-        public string Title { get { if (Movie == null) return "New Movie"; return "Edit Movie"; } }
+        public string Title { get { if (Movie == null || Movie.Id == 0) return "New Movie"; return "Edit Movie"; } }
     }
 }

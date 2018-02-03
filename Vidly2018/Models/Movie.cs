@@ -19,7 +19,7 @@ namespace Vidly2018.Models
         [Required]
         public DateTime DateAdded { get; set; }
 
-        [Required, Display(Name = "Number in Stock")]
+        [Required, Display(Name = "Number in Stock"), Range(1,20)]
         public int NumbersInStock { get; set; }
 
         public Genre Genre { get; set; }
