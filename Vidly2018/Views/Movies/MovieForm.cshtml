@@ -35,8 +35,15 @@
 
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.Id)
+
+    <br />
+    <div class="g-recaptcha" data-sitekey="6LcLPkQUAAAAAECjbMb5bdbNu3-jcJ_K5AqR0hkq"></div>
+    <br />
+
     <button type="submit" class="btn btn-primary">Save</button>
 }
+
+<script src='https://www.google.com/recaptcha/api.js?hl=iw' type="text/javascript"></script>
 
 @section scripts
 {
