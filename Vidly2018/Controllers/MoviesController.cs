@@ -25,6 +25,22 @@ namespace Vidly2018.Controllers
             _context.Dispose();
         }
 
+        private bool IsGoogleReCaptchaSolved(string gReCaptchaResponse)
+        {
+
+            string secretKey = "6LcLPkQUAAAAAOFHJQYb60qA0YrS1uZPjIw8DMTB";
+
+            var client = new WebClient();
+
+            var result = client.DownloadString($"https://www.google.com/recaptcha/api/siteverify?secret={secretKey}&response={gReCaptchaResponse}");
+
+            var obj = JObject.Parse(result);
+
+            var status = (bool)obj.SelectToken("success");
+
+            return status;
+        }
+
         // GET: Movies
         public ActionResult Random()
         {
@@ -44,7 +60,7 @@ namespace Vidly2018.Controllers
                 MovieFormViewModel viewModel = new MovieFormViewModel(movie)
                 {
                     Genres = _context.Genres.ToList()
-                    
+
                 };
                 return View("MovieForm", viewModel);
             }
@@ -92,50 +108,40 @@ namespace Vidly2018.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Save(Movie movie)
         {
-            var response = Request["g-recaptcha-response"];
 
-            string secretKey = "6LcLPkQUAAAAAOFHJQYb60qA0YrS1uZPjIw8DMTB";
-
-            var client = new WebClient();
-
-            var result = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secretKey, response));
-
-            var obj = JObject.Parse(result);
-
-            var status = (bool)obj.SelectToken("success");
-
-            ViewBag.Message = status ? "Google reCaptcha validation success" : "Google reCaptcha validation failed";
-
-            if (!ModelState.IsValid)
+            if (IsGoogleReCaptchaSolved(Request["g-recaptcha-response"]))
             {
-                var viewModel = new MovieFormViewModel(movie)
+                if (!ModelState.IsValid)
                 {
-                    Genres = _context.Genres.ToList()
-                };
-                return View("MovieForm", viewModel);
-            }
-            else
-            {
-                if (movie.Id == 0)
-                {
-                    //new movie:
-                    movie.DateAdded = DateTime.Now;
-                    _context.Movies.Add(movie);
+                    var viewModel = new MovieFormViewModel(movie)
+                    {
+                        Genres = _context.Genres.ToList()
+                    };
+                    return View("MovieForm", viewModel);
                 }
                 else
                 {
-                    // update existing:
-                    var movieInDb = _context.Movies.SingleOrDefault(m => m.Id == movie.Id);
+                    if (movie.Id == 0)
+                    {
+                        //new movie:
+                        movie.DateAdded = DateTime.Now;
+                        _context.Movies.Add(movie);
+                    }
+                    else
+                    {
+                        // update existing:
+                        var movieInDb = _context.Movies.SingleOrDefault(m => m.Id == movie.Id);
 
-                    movieInDb.NumbersInStock = movie.NumbersInStock;
+                        movieInDb.NumbersInStock = movie.NumbersInStock;
 
+                    }
+
+                    _context.SaveChanges();
+
+                    return RedirectToAction("Index", "Movies");
                 }
-
-                _context.SaveChanges();
-
-                return RedirectToAction("Index", "Movies");
-
             }
+            return View("Error");
         }
     }
 }
